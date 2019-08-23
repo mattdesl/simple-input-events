@@ -1,0 +1,37 @@
+{
+  "name": "input-events",
+  "version": "1.0.0",
+  "description": "Unified mouse & touch events for desktop and mobile",
+  "main": "./input-events.js",
+  "license": "MIT",
+  "author": {
+    "name": "Matt DesLauriers",
+    "email": "dave.des@gmail.com",
+    "url": "https://github.com/mattdesl"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "canvas-sketch": "^0.6.1",
+    "canvas-sketch-cli": "^1.10.1"
+  },
+  "scripts": {
+    "test": "canvas-sketch demo.js --open"
+  },
+  "keywords": [
+    "touch",
+    "events",
+    "mobile",
+    "tap",
+    "click",
+    "mouse",
+    "move"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattdesl/input-events.git"
+  },
+  "homepage": "https://github.com/mattdesl/input-events",
+  "bugs": {
+    "url": "https://github.com/mattdesl/input-events/issues"
+  }
+}
