@@ -1,9 +1,9 @@
-# input-events
+# simple-input-events
 
 Unified mouse & touch event handler for desktop and mobile devices. Filters touch events down to a single finger and offsets the client position so it is relative to the target element.
 
 ```js
-const createInputEvents = require('input-events');
+const createInputEvents = require('simple-input-events');
 
 // create input events with a target element
 const event = createInputEvents(canvas);
@@ -36,7 +36,7 @@ See [./demo.js](./demo.js) for an example.
 Use [npm](https://npmjs.com/) to install.
 
 ```sh
-npm install input-events --save
+npm install simple-input-events --save
 ```
 
 ## Usage
@@ -84,4 +84,4 @@ Re-attaches events from the target/parent elements if they had been detached.
 
 ## License
 
-MIT, see [LICENSE.md](http://github.com/mattdesl/input-events/blob/master/LICENSE.md) for details.
+MIT, see [LICENSE.md](http://github.com/mattdesl/simple-input-events/blob/master/LICENSE.md) for details.
