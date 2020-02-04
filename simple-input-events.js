@@ -10,8 +10,11 @@ module.exports = function createInputEvents (opt) {
     tapDistanceThreshold = 0.05,
     tapDelay = 300,
     preventDefault = false,
-    filtered = true
+    filtered = true,
+    passive = true
   } = opt;
+  
+  const eventOpts = passive ? { passive: true } : undefined;
 
   const emitter = new EventEmitter();
 
@@ -91,13 +94,13 @@ module.exports = function createInputEvents (opt) {
   function attach () {
     if (attached) return;
     attached = true;
-    target.addEventListener('touchstart', mousedown);
-    parent.addEventListener('touchend', mouseup);
-    parent.addEventListener('touchmove', mousemove);
+    target.addEventListener('touchstart', mousedown, eventOpts);
+    parent.addEventListener('touchend', mouseup, eventOpts);
+    parent.addEventListener('touchmove', mousemove, eventOpts);
 
-    target.addEventListener('mousedown', mousedown);
-    parent.addEventListener('mouseup', mouseup);
-    parent.addEventListener('mousemove', mousemove);
+    target.addEventListener('mousedown', mousedown, eventOpts);
+    parent.addEventListener('mouseup', mouseup, eventOpts);
+    parent.addEventListener('mousemove', mousemove, eventOpts);
 
     if (preventDefault) {
       window.addEventListener('dragstart', preventDefaultEvent, {
@@ -121,12 +124,8 @@ module.exports = function createInputEvents (opt) {
     parent.removeEventListener('mousemove', mousemove);
 
     if (preventDefault) {
-      window.removeEventListener('dragstart', preventDefaultEvent, {
-        passive: false
-      });
-      document.removeEventListener('touchmove', preventDefaultEvent, {
-        passive: false
-      });
+      window.removeEventListener('dragstart', preventDefaultEvent);
+      document.removeEventListener('touchmove', preventDefaultEvent);
     }
   }
 
