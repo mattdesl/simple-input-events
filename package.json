@@ -1,6 +1,6 @@
 {
   "name": "simple-input-events",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unified mouse & touch events for desktop and mobile",
   "main": "./simple-input-events.js",
   "license": "MIT",
