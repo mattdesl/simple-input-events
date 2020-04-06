@@ -7,7 +7,7 @@ module.exports = function createInputEvents (opt) {
   const {
     target = window,
     parent = window,
-    tapDistanceThreshold = 0.05,
+    tapDistanceThreshold = 10,
     tapDelay = 300,
     preventDefault = false,
     filtered = true,
@@ -20,7 +20,6 @@ module.exports = function createInputEvents (opt) {
 
   let initialIdentifier;
   let dragging = false;
-  let tapDistanceThresholdSq = tapDistanceThreshold * tapDistanceThreshold;
   let lastTime;
   let lastPosition;
   let attached = false;
@@ -29,6 +28,15 @@ module.exports = function createInputEvents (opt) {
 
   emitter.enable = attach;
   emitter.disable = detach;
+
+  Object.defineProperties(emitter, {
+    target: {
+      get () { return target }
+    },
+    parent: {
+      get () { return parent }
+    }
+  });
 
   return emitter;
 
@@ -60,11 +68,8 @@ module.exports = function createInputEvents (opt) {
       if (lastPosition != null) {
         const nowTime = Date.now();
         const delta = nowTime - lastTime;
-        const dist = squaredDistance(result.position, lastPosition);
-        const bounds = getElementBounds(target);
-        const hypot = Math.sqrt(bounds.width * bounds.width + bounds.height * bounds.height);
-        const normalizedDist = dist / hypot;
-        if (delta <= tapDelay && normalizedDist < tapDistanceThresholdSq) {
+        const dist = distance(result.position, lastPosition);
+        if (delta <= tapDelay && dist < tapDistanceThreshold) {
           emitter.emit('tap', result);
         }
         lastPosition = null;
@@ -176,26 +181,36 @@ module.exports = function createInputEvents (opt) {
   function createEvent (event, touch, target) {
     const bounds = getElementBounds(target);
     const position = getPosition(touch, target, bounds);
+    const uv = getNormalizedPosition(position, bounds);
     return {
       dragging,
       touch,
       inside: isInsideBounds(touch, bounds),
       position,
-      event
+      uv,
+      event,
+      bounds
     };
   }
 };
 
-function squaredDistance (a, b) {
+function distance (a, b) {
   const x = b[0] - a[0];
   const y = b[1] - a[1];
-  return x * x + y * y;
+  return Math.sqrt(x * x + y * y);
 }
 
 function isInsideBounds (event, bounds) {
   const { clientX, clientY } = event;
   return clientX >= bounds.left && clientX < bounds.right &&
     clientY >= bounds.top && clientY < bounds.bottom;
+}
+
+function getNormalizedPosition (position, bounds) {
+  return [
+    position[0] / bounds.width,
+    position[1] / bounds.height
+  ];
 }
 
 function getPosition (event, target, bounds) {
@@ -210,6 +225,8 @@ function getElementBounds (element) {
       element === document ||
       element === document.body) {
     return {
+      x: 0,
+      y: 0,
       left: 0,
       top: 0,
       right: window.innerWidth,

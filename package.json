@@ -15,7 +15,8 @@
     "canvas-sketch-cli": "^1.10.1"
   },
   "scripts": {
-    "test": "canvas-sketch demo.js --open"
+    "test": "canvas-sketch demo/canvas-demo.js --open",
+    "test-tap": "canvas-sketch demo/tap-demo.js --open"
   },
   "keywords": [
     "touch",
