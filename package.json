@@ -9,7 +9,9 @@
     "email": "dave.des@gmail.com",
     "url": "https://github.com/mattdesl"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mitt": "^2.1.0"
+  },
   "devDependencies": {
     "canvas-sketch": "^0.6.1",
     "canvas-sketch-cli": "^1.10.1"
