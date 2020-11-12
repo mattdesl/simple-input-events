@@ -1,4 +1,4 @@
-const { EventEmitter } = require('events');
+const mitt = require('mitt');
 
 module.exports = function createInputEvents (opt) {
   if (opt == null) opt = window;
@@ -16,7 +16,7 @@ module.exports = function createInputEvents (opt) {
   
   const eventOpts = passive ? { passive: true } : undefined;
 
-  const emitter = new EventEmitter();
+  const emitter = mitt();
 
   let initialIdentifier;
   let dragging = false;
